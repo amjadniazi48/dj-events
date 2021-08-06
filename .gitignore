@@ -3,4 +3,6 @@ node_modules
 .next/cache
 .next/server
 .next/static
+.next/build-manifest.json
+.next/build-loadable-manifest.json
 
