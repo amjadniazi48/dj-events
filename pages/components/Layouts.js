@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Header from "./Header";
+import Footer from "./Footer";
 import styles from '../../styles/Custom.module.css'
 const Layout = ({ title, keywords, description, children }) => {
   return (
@@ -14,11 +15,7 @@ const Layout = ({ title, keywords, description, children }) => {
       <body className="d-flex flex-column h-100">
         <Header />
         <div className={styles.container}>{children}</div>
-        <footer className="footer mt-auto py-3 bg-light">
-          <div className='container'>
-            <span className="text-muted">Place sticky footer content here.</span>
-          </div>
-        </footer>
+        <Footer/>
       </body>
     </html>
   );
