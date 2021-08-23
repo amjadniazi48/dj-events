@@ -1,8 +1,11 @@
+import Layout from '../components/Layouts';
 const Events = () => {
-    return ( <div>
+    return ( 
+ 
+        <Layout title='DJ events'>
         <h1>Events page 12</h1>
         <p>Hello this is the new paragraph</p>
-    </div>);
+        </Layout>);
 }
  
 export default Events;

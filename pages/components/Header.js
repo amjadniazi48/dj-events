@@ -17,7 +17,7 @@ const Header = () => {
                 <Link  href="/about"><a className="nav-link">About</a></Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              <Link  href="/events"><a className="nav-link">Events</a></Link>
               </li>
             </ul>
             <form className="d-flex">
