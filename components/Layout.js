@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "./Header";
 import Footer from "./Footer";
-import styles from '../../styles/Custom.module.css'
+import styles from '../styles/Custom.module.css'
 const Layout = ({ title, keywords, description, children }) => {
   return (
     <html lang="en" class="h-100">

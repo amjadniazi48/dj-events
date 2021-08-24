@@ -1,4 +1,4 @@
-import Layout from './components/Layouts';
+import Layout from '@/components/Layout';
 const About = () => {
     return ( 
         <Layout title='About DJ events'>      

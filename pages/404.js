@@ -1,4 +1,4 @@
-import Layout from './components/Layouts';
+import Layout from '@/components/Layout';
 import Link from 'next/link';
 import { BsExclamationTriangleFill } from "react-icons/bs";
 const PageNotFound = () => {
