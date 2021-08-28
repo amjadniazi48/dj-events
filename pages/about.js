@@ -1,6 +1,10 @@
+import Layout from '@/components/Layout';
 const About = () => {
     return ( 
-        <div><h1>About Page 15</h1></div>
+        <Layout title='About DJ events'>      
+        <h1>About Page 16</h1>
+        </Layout>
+      
      );
 }
  
