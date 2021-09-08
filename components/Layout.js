@@ -2,9 +2,11 @@ import Head from "next/head";
 import Header from "./Header";
 import Slider from "./Slider";
 import Footer from "./Footer";
+import { useRouter } from 'next/router'
 import styles from "@/styles/Custom.module.css";
 
 const Layout = ({ title, keywords, description, children }) => {
+  const router = useRouter()
   return (
     <>
       <Head>
@@ -20,7 +22,7 @@ const Layout = ({ title, keywords, description, children }) => {
       </Head>
       <main>
         <Header />
-        <Slider />
+        {router.pathname === '/' && <Slider />}
         <div className={styles.container}>{children}</div>
         <Footer />
       </main>

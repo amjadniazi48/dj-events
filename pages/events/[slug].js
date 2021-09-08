@@ -1,8 +1,48 @@
-const EventPage = () => {
-    return (  
-        <div><h1>This is the single event page</h1></div>
+import { API_URL } from '@/config/index';
+import Layout from '@/components/Layout';
+import Image from 'next/image';
+const EventPage = ({ evt }) => {
+    return (
+        <Layout>
+            <div className="container">
+                <small>
+                    <b>Dated :{new Date(evt.date).toLocaleDateString('en-IN')} at {evt.time}</b>
+
+                </small>
+
+                <div class="card p-1" >
+                    {evt.image && (
+
+                        <Image className="card-img-top"
+                            src={evt.image.formats.medium.url}
+                            width={960}
+                            height={600}
+                        />
+
+                    )}
+                    <div class="card-body">
+                        <h3>Performers:</h3>
+                        <p>{evt.performers}</p>
+                        <h3>Description:</h3>
+                        <p>{evt.description}</p>
+                        <h3>Venue: {evt.venue}</h3>
+                        <p>{evt.address}</p>
+                    </div>
+                </div>
+            </div>
+        </Layout>
     );
-    
 }
- 
+export async function getServerSideProps({ query: { slug } }) {
+
+    //  console.log(slug)
+    const res = await fetch(`${API_URL}/events?slug=${slug}`)
+    const events = await res.json()
+
+    return {
+        props: {
+            evt: events[0],
+        },
+    }
+}
 export default EventPage;
