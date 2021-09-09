@@ -21,6 +21,9 @@ const Header = () => {
               <li className="nav-item">
               <Link  href="/events"><a className="nav-link">Events</a></Link>
               </li>
+              <li className="nav-item">
+              <Link  href="/events/add"><a className="nav-link">Add Events</a></Link>
+              </li>
             </ul>
            <Search />
           </div>
