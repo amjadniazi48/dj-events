@@ -29,10 +29,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/events/[slug]": [
+    "/events/search": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/events/[slug].js"
+      "static/chunks/pages/events/search.js"
     ]
   },
   "ampFirstPages": []

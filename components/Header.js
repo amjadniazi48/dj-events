@@ -1,3 +1,5 @@
+
+import Search from '@/components/Search';
 import Link from 'next/link';
 const Header = () => {
     return ( 
@@ -20,10 +22,7 @@ const Header = () => {
               <Link  href="/events"><a className="nav-link">Events</a></Link>
               </li>
             </ul>
-            <form className="d-flex">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+           <Search />
           </div>
         </div>
       </nav>
