@@ -15,8 +15,7 @@ function AddEventPage() {
   const {register,handleSubmit,formState:{errors}} = useForm();
   console.log(errors)
   const router = useRouter();
-  const onSubmit = async () => {
-    
+  const onSubmit = async () => {  
     const myEvent = { name, performers, venue, address, date, time, description }
     const requestOptions = {
       method: 'POST',
@@ -30,7 +29,7 @@ function AddEventPage() {
   };
   return (
     <Layout title="Add Event page">
-      <div className="container">
+      <div className="container bg-light p-3">
         <h3 className="text-primary text-center">Add Event</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
