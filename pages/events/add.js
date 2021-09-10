@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { API_URL } from "@/config/index";
 import {useForm} from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function AddEventPage() {
   const [name, setName] = useState("");
   const [performers, setPerformers] = useState("");
@@ -15,7 +17,8 @@ function AddEventPage() {
   const {register,handleSubmit,formState:{errors}} = useForm();
   console.log(errors)
   const router = useRouter();
-  const onSubmit = async () => {  
+  const onSubmit = async (e) => { 
+   
     const myEvent = { name, performers, venue, address, date, time, description }
     const requestOptions = {
       method: 'POST',
@@ -24,13 +27,24 @@ function AddEventPage() {
     };
    
     const response = await fetch(`${API_URL}/events`, requestOptions);
-    const content = response.json();
-    console.log("The form has been submitted")
+
+    if(!response.ok){
+      toast.error('Something Went Wrong'),{
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+      };
+      return
+    }
+    toast.success("A new event has been submitted successfully !", {
+      position: toast.POSITION.TOP_CENTER,
+      theme: "colored"
+    });
   };
   return (
     <Layout title="Add Event page">
       <div className="container bg-light p-3">
         <h3 className="text-primary text-center">Add Event</h3>
+        <ToastContainer style={{ width: "600px" }} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label className="form-label">Name</label>
