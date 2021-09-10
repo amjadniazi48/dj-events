@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { API_URL } from "@/config/index";
+import {useForm} from 'react-hook-form';
 function AddEventPage() {
   const [name, setName] = useState("");
   const [performers, setPerformers] = useState("");
@@ -11,17 +12,27 @@ function AddEventPage() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-        const myEvent={name,performers,venue,address,date,time,description}
-        console.log(myEvent);
-  };
+  const {register,handleSubmit,formState:{errors}} = useForm();
+  console.log(errors)
   const router = useRouter();
+  const onSubmit = async () => {
+    
+    const myEvent = { name, performers, venue, address, date, time, description }
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(myEvent)
+    };
+   
+    const response = await fetch(`${API_URL}/events`, requestOptions);
+    const content = response.json();
+    console.log("The form has been submitted")
+  };
   return (
     <Layout title="Add Event page">
       <div className="container">
-        <h1>Add Event page</h1>
-        <form onSubmit={handleSubmit}>
+        <h3 className="text-primary text-center">Add Event</h3>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label className="form-label">Name</label>
             <input
@@ -30,19 +41,24 @@ function AddEventPage() {
               id="name"
               name="name"
               value={name}
+              {...register("name",{required:true})}
               onChange={(e) => setName(e.target.value)}
             />
+              {errors.name && <p className="text-danger">Name is required</p>}
           </div>
+        
           <div className="mb-3">
-            <label className="form-label">Performs</label>
+            <label className="form-label">Performers</label>
             <input
               className="form-control"
               type="text"
               name="performers"
               id="performers"
               value={performers}
+              {...register("performers",{required:true})}
               onChange={(e) => setPerformers(e.target.value)}
             />
+             {errors.performers && <p className="text-danger">Performers are required</p>}
           </div>
           <div className="mb-3">
             <label className="form-label">Venue</label>
@@ -52,8 +68,10 @@ function AddEventPage() {
               name="venue"
               id="venue"
               value={venue}
+              {...register("venue",{required:true})}
               onChange={(e) => setVenue(e.target.value)}
             />
+                {errors.venue && <p className="text-danger">Venue is required</p>} 
           </div>
           <div className="mb-3">
             <label className="form-label">Address</label>
@@ -63,41 +81,49 @@ function AddEventPage() {
               name="address"
               id="address"
               value={address}
+              {...register("address",{required:true})}
               onChange={(e) => setAddress(e.target.value)}
             />
+                {errors.address && <p className="text-danger">Address is required</p>} 
           </div>
           <div className="mb-3">
-            <label className="form-label">Address</label>
+            <label className="form-label">Date</label>
             <input
               className="form-control"
               type="date"
               name="date"
               id="date"
               value={date}
+              {...register("date",{required:true})}
               onChange={(e) => setDate(e.target.value)}
             />
+                {errors.date && <p className="text-danger">Date is required</p>}  
           </div>
           <div className="mb-3">
-            <label className="form-label">Address</label>
+            <label className="form-label">Time</label>
             <input
               className="form-control"
               type="text"
               name="time"
               id="time"
               value={time}
+              {...register("time",{required:true})}
               onChange={(e) => setTime(e.target.value)}
             />
+              {errors.time && <p className="text-danger">Time is required</p>}  
           </div>
           <div className="mb-3">
-            <label className="form-label">description</label>
+            <label className="form-label">Description</label>
             <textarea
               className="form-control"
               type="text"
               name="description"
               id="description"
               value={description}
+              {...register("description",{required:true})}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
+               {errors.description && <p className="text-danger">Description is required</p>}    
           </div>
           <input
             type="submit"
