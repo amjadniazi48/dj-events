@@ -16,7 +16,7 @@ const EventPage = ({ evt }) => {
             < BsFillTrashFill color="white"></BsFillTrashFill>&nbsp;Delete
             </a>
             </Link>
-            <Link href={`/events/edit/${evt.slug}`}> 
+            <Link href={`/events/edit/${evt.id}`}> 
             <a className="btn btn-success float-end">
             <BsPencil color="white" ></BsPencil>&nbsp;Edit
             </a>

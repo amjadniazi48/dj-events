@@ -14,10 +14,10 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
-    "/404": [
+    "/": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/404.js"
+      "static/chunks/pages/index.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
@@ -28,6 +28,26 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
+    ],
+    "/events": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/events.js"
+    ],
+    "/events/[slug]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/events/[slug].js"
+    ],
+    "/events/add": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/events/add.js"
+    ],
+    "/events/edit/[id]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/events/edit/[id].js"
     ]
   },
   "ampFirstPages": []

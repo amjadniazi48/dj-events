@@ -1,20 +1,24 @@
 import Layout from "@/components/Layout";
+import moment from 'moment';
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { API_URL } from "@/config/index";
 import {useForm} from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-function AddEventPage() {
-  const [name, setName] = useState("");
-  const [performers, setPerformers] = useState("");
-  const [venue, setVenue] = useState("");
-  const [address, setAddress] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [description, setDescription] = useState("");
+import Image from 'next/image'
+function EditEventPage({evt}) {
+  const [name, setName] = useState(evt.name);
+  const [performers, setPerformers] = useState(evt.performers);
+  const [venue, setVenue] = useState(evt.venue);
+  const [address, setAddress] = useState(evt.address);
+  const [date, setDate] = useState(evt.date);
+  const [time, setTime] = useState(evt.time);
+  const [description, setDescription] = useState(evt.description);
   const {register,handleSubmit,formState:{errors}} = useForm();
-  
+  const [imagePreview, setImagePreview] = useState(
+    evt.image ? evt.image.formats.thumbnail.url : null
+  )
   const router = useRouter();
   const handleRegistration = async (e) => { 
    
@@ -107,7 +111,7 @@ function AddEventPage() {
               type="date"
               name="date"
               id="date"
-              value={date}
+              value={moment(date).format('yyyy-MM-DD')}
               {...register("date",{required:true})}
               onChange={(e) => setDate(e.target.value)}
             />
@@ -141,13 +145,35 @@ function AddEventPage() {
           </div>
           <input
             type="submit"
-            value="Add Event"
+            value="Update Event"
             className="btn btn-primary block"
           />
         </form>
+
+        <h3>Event Image</h3>
+      {imagePreview ? (
+        <Image src={imagePreview} height={100} width={170} />
+      ) : (
+        <div>
+          <p>No image uploaded</p>
+        </div>
+      )}
       </div>
     </Layout>
   );
 }
 
-export default AddEventPage;
+export default EditEventPage;
+
+export async function getServerSideProps({ params: { id }}) {
+  
+  
+    const res = await fetch(`${API_URL}/events/${id}`)
+    const evt = await res.json()
+    return {
+      props: {
+        evt,
+       
+      },
+    }
+  }
