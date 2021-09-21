@@ -15,9 +15,9 @@ function AddEventPage() {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const {register,handleSubmit,formState:{errors}} = useForm();
-  console.log(errors)
+  
   const router = useRouter();
-  const onSubmit = async (e) => { 
+  const handleRegistration = async (e) => { 
    
     const myEvent = { name, performers, venue, address, date, time, description }
     const requestOptions = {
@@ -27,6 +27,7 @@ function AddEventPage() {
     };
    
     const response = await fetch(`${API_URL}/events`, requestOptions);
+    const evt = await response.json()
 
     if(!response.ok){
       toast.error('Something Went Wrong'),{
@@ -39,13 +40,14 @@ function AddEventPage() {
       position: toast.POSITION.TOP_CENTER,
       theme: "colored"
     });
+    router.push(`/events/${evt.slug}`)
   };
   return (
     <Layout title="Add Event page">
       <div className="container bg-light p-3">
         <h3 className="text-primary text-center">Add Event</h3>
         <ToastContainer style={{ width: "600px" }} />
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(handleRegistration)}>
           <div className="mb-3">
             <label className="form-label">Name</label>
             <input
