@@ -2,28 +2,25 @@ import { API_URL } from "@/config/index";
 import Layout from "@/components/Layout";
 import Image from "next/image";
 import Link from 'next/link';
-import { BsPencil,BsFillTrashFill } from "react-icons/bs";
+import { BsPencil, BsFillTrashFill } from "react-icons/bs";
 const EventPage = ({ evt }) => {
   return (
     <Layout>
       <div className="container">
         <div className="card">
           <div className="card-body">
-          
-         
             <Link href="#">
-            <a  className="btn btn-danger float-end ms-1">
-            < BsFillTrashFill color="white"></BsFillTrashFill>&nbsp;Delete
-            </a>
+              <a className="btn btn-danger float-end ms-1">
+                < BsFillTrashFill color="white"></BsFillTrashFill>&nbsp;Delete
+              </a>
             </Link>
-            <Link href={`/events/edit/${evt.id}`}> 
-            <a className="btn btn-success float-end">
-            <BsPencil color="white" ></BsPencil>&nbsp;Edit
-            </a>
+            <Link href={`/events/edit/${evt.id}`}>
+              <a className="btn btn-success float-end">
+                <BsPencil color="white" ></BsPencil>&nbsp;Edit
+              </a>
             </Link>
           </div>
         </div>
-        
         <small>
           <b>
             Dated :{new Date(evt.date).toLocaleDateString("en-IN")} at{" "}
@@ -31,7 +28,8 @@ const EventPage = ({ evt }) => {
           </b>
         </small>
         <div class="card p-1">
-          {evt.image && (
+       
+          {evt.image.formats.medium && (
             <Image
               className="card-img-top"
               src={evt.image.formats.medium.url}
