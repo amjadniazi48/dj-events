@@ -6,11 +6,14 @@ import { API_URL } from "@/config/index";
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Modal, Button } from 'antd';
+import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import Modal from '@/components/Modal';
+import ImageUpload from '@/components/ImageUpload';
+import Image from 'next/image';
 
-import Image from 'next/image'
 function EditEventPage({ evt }) {
+    const [id, setId] = useState(evt.id);
     const [name, setName] = useState(evt.name);
     const [performers, setPerformers] = useState(evt.performers);
     const [venue, setVenue] = useState(evt.venue);
@@ -22,19 +25,28 @@ function EditEventPage({ evt }) {
     const [imagePreview, setImagePreview] = useState(
         evt.image ? evt.image.formats.thumbnail.url : null
     )
+    const [showModal, setShowModal] = useState(false)
     const router = useRouter();
-    const handleRegistration = async (e) => {
 
-        const myEvent = { name, performers, venue, address, date, time, description }
+
+    const imageUploaded = async (e) => {
+        console.log(evt)
+        const res = await fetch(`${API_URL}/events/${evt.id}`)
+        const data = await res.json()
+        setImagePreview(data.image.formats.thumbnail.url)
+        setShowModal(false)
+      }
+
+    const handleRegistration = async (e) => {
+        const myEvent = { id,name, performers, venue, address, date, time, description }
         const requestOptions = {
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(myEvent)
         };
-
-        const response = await fetch(`${API_URL}/events`, requestOptions);
+       
+        const response = await fetch(`${API_URL}/events/${myEvent.id}`, requestOptions);
         const evt = await response.json()
-
         if (!response.ok) {
             toast.error('Something Went Wrong'), {
                 position: toast.POSITION.TOP_CENTER,
@@ -47,6 +59,7 @@ function EditEventPage({ evt }) {
             theme: "colored"
         });
         router.push(`/events/${evt.slug}`)
+      
     };
     return (
         <Layout title="Add Event page">
@@ -67,7 +80,6 @@ function EditEventPage({ evt }) {
                         />
                         {errors.name && <p className="text-danger">Name is required</p>}
                     </div>
-
                     <div className="mb-3">
                         <label className="form-label">Performers</label>
                         <input
@@ -147,12 +159,20 @@ function EditEventPage({ evt }) {
                         {errors.description && <p className="text-danger">Description is required</p>}
                     </div>
                     <input
+                            className="form-control"
+                            type="hidden"
+                            name="id"
+                            id="id"
+                            value={id}
+                            {...register("id", { required: true })}
+                            onChange={(e) => setId(e.target.value)}
+                        />
+                    <input
                         type="submit"
                         value="Update Event"
                         className="btn btn-primary block"
                     />
                 </form>
-
                 <h3>Event Image</h3>
                 {imagePreview ? (
                     <Image src={imagePreview} height={100} width={170} />
@@ -162,25 +182,26 @@ function EditEventPage({ evt }) {
                     </div>
                 )}
                 <div>
-                    <Button type="primary"><EditOutlined />Update Image</Button>
+                    <Button type="primary" onClick={() => setShowModal(true)} ><EditOutlined />Update Image</Button>
                 </div>
             </div>
-
+            <Modal show={showModal} onClose={() => setShowModal(false)} title="Upload Image">
+            <ImageUpload
+                evtId={evt.id}
+                imageUploaded={imageUploaded}       
+             />
+            </Modal>
         </Layout>
     );
 }
 
 export default EditEventPage;
-
 export async function getServerSideProps({ params: { id } }) {
-
-
     const res = await fetch(`${API_URL}/events/${id}`)
     const evt = await res.json()
     return {
         props: {
             evt,
-
         },
     }
 }
