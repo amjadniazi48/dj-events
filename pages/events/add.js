@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { API_URL } from "@/config/index";
 import {useForm} from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
+import { PlusCircleOutlined    } from '@ant-design/icons';
 import 'react-toastify/dist/ReactToastify.css';
 function AddEventPage() {
   const [name, setName] = useState("");
@@ -40,11 +41,11 @@ function AddEventPage() {
       theme: "colored"
     });
     router.push(`/events/${evt.slug}`)
-  };
+   };
   return (
     <Layout title="Add Event page">
       <div className="container bg-light p-3">
-        <h3 className="text-primary text-center">Add Event</h3>
+        <h3 className="text-primary text-center"><PlusCircleOutlined  style={{ verticalAlign: '-0.001em'}}/>&nbsp;&nbsp;Add Event</h3>
         <ToastContainer style={{ width: "600px" }} />
         <form onSubmit={handleSubmit(handleRegistration)}>
           <div className="mb-3">

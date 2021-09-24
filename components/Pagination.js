@@ -13,23 +13,23 @@ export default function Pagination({ page, total }) {
    const [pageNumbers,setPageNumbers]=useState(totalPages);
    //==============================
   return (
-    <>
+    <div className="container text-center">
       {page > 1 && (
         <Link href={`/?page=${page - 1}`}>
-          <a className='btn btn-secondary'>Prev</a>
+          <a className='btn btn-primary btn-sm'>Prev</a>
         </Link>
       )}
         {pageNumbers && pageNumbers.map((item,index)=>(
         <Link href={`/?page=${item}`} key={index}>
-          <a className='btn btn-secondary m-2'>{item}</a>
+          <a className='btn btn-primary btn-sm m-2'>{item}</a>
         </Link>
         ))
         }
       {page < lastPage && (
         <Link href={`/?page=${page + 1}`}>
-          <a className='btn btn-secondary m-2'>Next</a>
+          <a className='btn btn-primary btn-sm m-2'>Next</a>
         </Link>
       )}
-    </>
+    </div>
   )
 }

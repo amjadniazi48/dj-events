@@ -1,4 +1,4 @@
-
+import { PlusCircleOutlined } from '@ant-design/icons';
 import Search from '@/components/Search';
 import Link from 'next/link';
 const Header = () => {
@@ -23,6 +23,9 @@ const Header = () => {
               </li>
               <li className="nav-item">
               <Link  href="/events/add"><a className="nav-link">Add Events</a></Link>
+              </li>
+              <li className="nav-item">
+               <Link  href="/account/register"><a className="nav-link"><PlusCircleOutlined  style={{ verticalAlign: '-0.027em', color: 'white' }}/>&nbsp;&nbsp;Register</a></Link>
               </li>
             </ul>
            <Search />

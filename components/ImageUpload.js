@@ -26,7 +26,6 @@ export default function ImageUpload({ evtId, imageUploaded }) {
 
     return (
         <div>
-           
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <input type='file' onChange={handleFileChange}  className="mb-2"/>
