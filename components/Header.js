@@ -58,7 +58,7 @@ const Header = () => {
                 <>
                  {/* after logged out */}
                   <li className="nav-item">
-                    <Link href="/account/register">
+                    <Link href="/account/login">
                       <a className="nav-link">
                         <PlusCircleOutlined
                           style={{ verticalAlign: "-0.027em", color: "white" }}
