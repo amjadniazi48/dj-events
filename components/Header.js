@@ -1,10 +1,10 @@
-import { PlusCircleOutlined,LogoutOutlined  } from "@ant-design/icons";
+import { PlusCircleOutlined, LogoutOutlined } from "@ant-design/icons";
 import Search from "@/components/Search";
 import AuthContext from "@/context/AuthContext";
 import Link from "next/link";
 import { useContext } from "react";
 const Header = () => {
-  const {user,logout}=useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -42,21 +42,29 @@ const Header = () => {
               </li>
               {user ? (
                 <>
-              {/* after logged in */}
+                  {/* after logged in */}
                   <li className="nav-item">
                     <Link href="/events/add">
                       <a className="nav-link">Add Events</a>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link href="/events/add">
-                      <a className="nav-link"><LogoutOutlined />&nbsp;&nbsp;Logout</a>
+                    <Link href='/account/dashboard'>
+                    <a className="nav-link">Dashboard</a>
                     </Link>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      onClick={() => logout()}
+                      className='btn btn-secondary'
+                    >
+                      <LogoutOutlined /> Logout
+                    </button>
                   </li>
                 </>
               ) : (
                 <>
-                 {/* after logged out */}
+                  {/* after logged out */}
                   <li className="nav-item">
                     <Link href="/account/login">
                       <a className="nav-link">
@@ -64,6 +72,17 @@ const Header = () => {
                           style={{ verticalAlign: "-0.027em", color: "white" }}
                         />
                         &nbsp;&nbsp;Login
+                      </a>
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link href="/account/register">
+                      <a className="nav-link">
+                        <PlusCircleOutlined
+                          style={{ verticalAlign: "-0.027em", color: "white" }}
+                        />
+                        &nbsp;&nbsp;Register
                       </a>
                     </Link>
                   </li>
