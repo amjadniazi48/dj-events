@@ -18,8 +18,7 @@ const EventItem = ({ evt }) => {
                             width={175}
                             height={105}
                         />
-
-                        <p> <small>  {new Date(evt.date).toLocaleDateString('en-IN')} at {evt.time}</small></p>
+                        <p><small>{new Date(evt.date).toLocaleDateString('en-IN')} at {evt.time}</small></p>
                     </div>
                     <div className="col-md-8 p-2">
                         <p>{evt.description}</p>
@@ -33,7 +32,6 @@ const EventItem = ({ evt }) => {
                 </div>
             </div>
         </div>
-
     )
 }
 
