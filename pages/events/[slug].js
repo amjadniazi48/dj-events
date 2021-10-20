@@ -28,15 +28,16 @@ const EventPage = ({ evt }) => {
           </b>
         </small>
         <div class="card p-1">
-       
-          {evt.image.formats.medium && (
             <Image
               className="card-img-top"
-              src={evt.image.formats.medium.url}
+              src={
+                evt.image
+                    ? evt.image.formats.medium.url
+                    : '/images/event-default.png'
+            }
               width={960}
               height={600}
-            />
-          )}
+            />    
           <div class="card-body">
             <h3>Performers:</h3>
             <p>{evt.performers}</p>

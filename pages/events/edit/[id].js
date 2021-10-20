@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import { parseCookies } from '@/helpers/index'
 import moment from 'moment';
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -12,7 +13,7 @@ import Modal from '@/components/Modal';
 import ImageUpload from '@/components/ImageUpload';
 import Image from 'next/image';
 
-function EditEventPage({ evt }) {
+function EditEventPage({ evt, token }) {
     const [id, setId] = useState(evt.id);
     const [name, setName] = useState(evt.name);
     const [performers, setPerformers] = useState(evt.performers);
@@ -41,13 +42,17 @@ function EditEventPage({ evt }) {
         const myEvent = { id,name, performers, venue, address, date, time, description }
         const requestOptions = {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${token}`, },
             body: JSON.stringify(myEvent)
         };
        
         const response = await fetch(`${API_URL}/events/${myEvent.id}`, requestOptions);
         const evt = await response.json()
         if (!response.ok) {
+            if (response.status === 403 || response.status === 401) {
+                toast.error('Unauthorized')
+                return
+              }
             toast.error('Something Went Wrong'), {
                 position: toast.POSITION.TOP_CENTER,
                 theme: "colored"
@@ -194,18 +199,15 @@ function EditEventPage({ evt }) {
         </Layout>
     );
 }
-
 export default EditEventPage;
-export async function getServerSideProps({ params: { id } , req}) {
-
-
+export async function getServerSideProps({ params: { id }, req }) {
+    const { token } = parseCookies(req)
     const res = await fetch(`${API_URL}/events/${id}`)
-    
     const evt = await res.json()
-    console.log(req.headers.cookie);
     return {
-        props: {
-            evt,
-        },
+      props: {
+        evt,
+        token,
+      },
     }
-}
+  }

@@ -1,9 +1,10 @@
-
+import { useRouter } from 'next/router';
 import { parseCookies } from '@/helpers/index'
 import Layout from '@/components/Layout'
 import DashboardEvent from '@/components/DashboardEvent'
 import { API_URL } from '@/config/index'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function DashboardPage({ events, token }) {
   const router = useRouter()
 

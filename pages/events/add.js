@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import { parseCookies } from '@/helpers/index'
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { API_URL } from "@/config/index";
@@ -6,7 +7,7 @@ import {useForm} from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import { PlusCircleOutlined    } from '@ant-design/icons';
 import 'react-toastify/dist/ReactToastify.css';
-function AddEventPage() {
+function AddEventPage({ token }) {
   const [name, setName] = useState("");
   const [performers, setPerformers] = useState("");
   const [venue, setVenue] = useState("");
@@ -22,7 +23,7 @@ function AddEventPage() {
     const myEvent = { name, performers, venue, address, date, time, description }
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' ,   Authorization: `Bearer ${token}`},
       body: JSON.stringify(myEvent)
     };
    
@@ -30,6 +31,10 @@ function AddEventPage() {
     const evt = await response.json()
 
     if(!response.ok){
+      if (res.status === 403 || res.status === 401) {
+        toast.error('UnAuthorized')
+        return
+      }
       toast.error('Something Went Wrong'),{
         position: toast.POSITION.TOP_CENTER,
         theme: "colored"
@@ -152,3 +157,12 @@ function AddEventPage() {
 }
 
 export default AddEventPage;
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookies(req)
+
+  return {
+    props: {
+      token,
+    },
+  }
+}
